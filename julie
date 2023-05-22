@@ -6,9 +6,8 @@ root = tk.Tk()
 root.title("Party Hire Store")
 
 logo_image = Image.open(r"C:\Users\Marco\Downloads\julie.png")
-logo_image = logo_image.resize((100, 100))
+logo_image = logo_image.resize((75, 75))
 logo_photo = ImageTk.PhotoImage(logo_image)
-logo_image = logo_image.geo
 
 logo_label = tk.Label(root, image=logo_photo)
 logo_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
