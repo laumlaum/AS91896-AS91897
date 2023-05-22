@@ -29,12 +29,12 @@ def add_item():
         return
 
     customer_name = customer_name_entry.get()
-    if not customer_name.isalpha():
+    if not customer_name.replace(" ","").isalpha():
         status_label.config(text="Invalid input. Please enter a valid customer name.")
         return
 
     item_name = item_name_entry.get()
-    if not item_name.isalpha():
+    if not item_name.replace(" ","").isalpha():
         status_label.config(text="Invalid input. Please enter a valid item name.")
         return
 
