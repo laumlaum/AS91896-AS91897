@@ -5,6 +5,8 @@ from PIL import ImageTk, Image
 root = tk.Tk()
 root.title("Party Hire Store")
 
+#place image for the logo and adjust size and position
+
 logo_image = Image.open(r"C:\Users\Marco\Downloads\julie.png")
 logo_image = logo_image.resize((75, 75))
 logo_photo = ImageTk.PhotoImage(logo_image)
@@ -13,6 +15,8 @@ logo_label = tk.Label(root, image=logo_photo)
 logo_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
 items_out = {}
+
+# define entry boxes
 
 def add_item():
     customer_name = customer_name_entry.get()
@@ -48,7 +52,7 @@ def add_item():
     status_label.config(text=f"{item_count} {item_name}(s) added to items out list for {customer_name}. Receipt number is {receipt_number}.")
     update_treeviews()
 
-
+#define remove item function
 def remove_item():
     selected_item = items_out_treeview.focus()
     if selected_item:
@@ -78,7 +82,7 @@ def update_treeviews():
         items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name))
         item_counts_treeview.insert("", tk.END, values=(receipt_number, item_count))
 
-
+#insert entry boxes
 customer_name_label = tk.Label(root, text="Customer full name:")
 customer_name_label.grid(row=0, column=0, padx=5, pady=5)
 customer_name_entry = tk.Entry(root)
