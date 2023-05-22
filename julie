@@ -1,9 +1,19 @@
-
-import tkinter as tk
 from tkinter import ttk
+import tkinter as tk
+from PIL import ImageTk, Image
+
+root = tk.Tk()
+root.title("Party Hire Store")
+
+logo_image = Image.open(r"C:\Users\Marco\Downloads\julie.png")
+logo_image = logo_image.resize((100, 100))
+logo_photo = ImageTk.PhotoImage(logo_image)
+logo_image = logo_image.geo
+
+logo_label = tk.Label(root, image=logo_photo)
+logo_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
 items_out = {}
-
 
 def add_item():
     customer_name = customer_name_entry.get()
@@ -25,7 +35,8 @@ def add_item():
         status_label.config(text="Invalid input. Please enter a valid item name.")
         return
 
-        if not receipt_number.isdigit():status_label.config(text="Receipt number should be an integer.")
+    if not receipt_number.isdigit():
+        status_label.config(text="Receipt number should be an integer.")
         return
 
     item_count = int(item_count)
@@ -40,46 +51,33 @@ def add_item():
 
 
 def remove_item():
-    receipt_number = receipt_number_entry.get()
-    if receipt_number in items_out:
-        item_name = items_out[receipt_number]['item_name']
-        customer_name = items_out[receipt_number]['customer_name']
-        item_count = items_out[receipt_number]['item_count']
-        del items_out[receipt_number]
-        status_label.config(text=f"{item_count} {item_name}(s) returned by {customer_name}. Receipt number {receipt_number} removed from items out list.")
-        update_treeviews()
+    selected_item = items_out_treeview.focus()
+    if selected_item:
+        receipt_number = items_out_treeview.item(selected_item)['values'][0]
+        if receipt_number in items_out:
+            item_name = items_out[receipt_number]['item_name']
+            customer_name = items_out[receipt_number]['customer_name']
+            item_count = items_out[receipt_number]['item_count']
+            del items_out[receipt_number]
+            status_label.config(
+                text=f"{item_count} {item_name}(s) returned by {customer_name}. Receipt number {receipt_number} removed from items out list."
+            )
+            update_treeviews()
+        else:
+            status_label.config(text="Receipt number not found in items out list.")
     else:
-        status_label.config(text="Receipt number not found in items out list.")
+        status_label.config(text="Please select a row in the Treeview.")
+
 
 def update_treeviews():
-    for child in items_out_treeview.get_children():
-        items_out_treeview.delete(child)
-    for child in item_counts_treeview.get_children():
-        item_counts_treeview.delete(child)
+    items_out_treeview.delete(*items_out_treeview.get_children())
+    item_counts_treeview.delete(*item_counts_treeview.get_children())
     for receipt_number, item_data in items_out.items():
         customer_name = item_data['customer_name']
         item_name = item_data['item_name']
         item_count = item_data['item_count']
         items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name))
         item_counts_treeview.insert("", tk.END, values=(receipt_number, item_count))
-
-root = tk.Tk()
-root.title("Party Hire Store")
-
-customer_name_label = tk.Label(root, text="Customer full name:")
-customer_name_label.grid(row=0, column=0, padx=5, pady=5)
-customer_name_entry = tk.Entry(root)
-customer_name_entry.grid(row=0, column=1, padx=5, pady=5)
-
-receipt_number_label = tk.Label(root, text="Receipt number:")
-receipt_number_label.grid(row=1, column=0, padx=5, pady=5)
-receipt_number_entry = tk.Entry(root)
-receipt_number_entry.grid(row=1, column=1, padx=5, pady=5)
-
-item_name_label = tk.Label(root, text="Item that is hired:")
-item_name_label.grid(row=2, column=0, padx=5, pady=5)
-item_name_entry = tk.Entry(root)
-item_name_entry.grid(row=2, column=1, padx=5, pady=5)
 
 
 customer_name_label = tk.Label(root, text="Customer full name:")
@@ -128,28 +126,4 @@ item_counts_treeview.heading("receipt_number", text="Receipt number")
 item_counts_treeview.heading("item_count", text="Item count")
 item_counts_treeview.pack(side="left", fill="both", expand=True)
 
-def update_treeviews():
-    receipt_number, item_data = list(items_out.items())[-1]  # Get the last added item
-    customer_name = item_data['customer_name']
-    item_name = item_data['item_name']
-    item_count = item_data['item_count']
-    items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name))
-    item_counts_treeview.insert("", tk.END, values=(receipt_number, item_count))
-def remove_item():
-    selected_item = items_out_treeview.focus()
-    if selected_item:
-        receipt_number = items_out_treeview.item(selected_item)['values'][0]
-        if receipt_number in items_out:
-            item_name = items_out[receipt_number]['item_name']
-            customer_name = items_out[receipt_number]['customer_name']
-            item_count = items_out[receipt_number]['item_count']
-            del items_out[receipt_number]
-            status_label.config(
-                text=f"{item_count} {item_name}(s) returned by {customer_name}. Receipt number {receipt_number} removed from items out list.")
-            update_treeviews()
-        else:
-            status_label.config(text="Receipt number not found in items out list.")
-    else:
-        status_label.config(text="Please select a row in the Treeview.")
-
-root.mainloop() 
+root.mainloop()
