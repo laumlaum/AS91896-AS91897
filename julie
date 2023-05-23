@@ -16,7 +16,7 @@ logo_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
 items_out = {}
 
-# define entry boxes
+# define entry boxes, create error function
 
 def add_item():
     customer_name = customer_name_entry.get()
@@ -74,15 +74,13 @@ def remove_item():
 
 def update_treeviews():
     items_out_treeview.delete(*items_out_treeview.get_children())
-    item_counts_treeview.delete(*item_counts_treeview.get_children())
     for receipt_number, item_data in items_out.items():
         customer_name = item_data['customer_name']
         item_name = item_data['item_name']
         item_count = item_data['item_count']
-        items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name))
-        item_counts_treeview.insert("", tk.END, values=(receipt_number, item_count))
+        items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name, item_count))
 
-#insert entry boxes
+#insert entry boxes and set position on the grid
 customer_name_label = tk.Label(root, text="Customer full name:")
 customer_name_label.grid(row=0, column=0, padx=5, pady=5)
 customer_name_entry = tk.Entry(root)
@@ -115,18 +113,12 @@ status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 items_out_frame = tk.Frame(root)
 items_out_frame.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
-items_out_treeview = ttk.Treeview(items_out_frame, columns=("receipt_number", "customer_name", "item_name"), show="headings")
+items_out_treeview = ttk.Treeview(items_out_frame, columns=("receipt_number", "customer_name", "item_name","item_count"), show="headings")
 items_out_treeview.heading("receipt_number", text="Receipt number")
 items_out_treeview.heading("customer_name", text="Customer name")
 items_out_treeview.heading("item_name", text="Item name")
+items_out_treeview.heading("item_count", text="Item count")
 items_out_treeview.pack(side="left", fill="both", expand=True)
 
-item_counts_frame = tk.Frame(root)
-item_counts_frame.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
-
-item_counts_treeview = ttk.Treeview(item_counts_frame, columns=("receipt_number", "item_count"), show="headings")
-item_counts_treeview.heading("receipt_number", text="Receipt number")
-item_counts_treeview.heading("item_count", text="Item count")
-item_counts_treeview.pack(side="left", fill="both", expand=True)
 
 root.mainloop()
