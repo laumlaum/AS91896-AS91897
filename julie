@@ -71,7 +71,16 @@ def remove_item():
     else:
         status_label.config(text="Please select a row in the Treeview.")
 
+def clear_entries():
+    customer_name_entry.delete(0, tk.END)
+    receipt_number_entry.delete(0, tk.END)
+    item_name_entry.delete(0, tk.END)
+    item_count_entry.delete(0, tk.END)
+    clear_button = tk.Button(root, text="Clear entries", command=clear_entries)
+    clear_button.grid(row=5, column=0, padx=5, pady=5)
 
+
+#create treeview and values
 def update_treeviews():
     items_out_treeview.delete(*items_out_treeview.get_children())
     for receipt_number, item_data in items_out.items():
@@ -113,6 +122,7 @@ status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 items_out_frame = tk.Frame(root)
 items_out_frame.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
+#get values for treeview 
 items_out_treeview = ttk.Treeview(items_out_frame, columns=("receipt_number", "customer_name", "item_name","item_count"), show="headings")
 items_out_treeview.heading("receipt_number", text="Receipt number")
 items_out_treeview.heading("customer_name", text="Customer name")
