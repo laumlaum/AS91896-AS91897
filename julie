@@ -76,9 +76,6 @@ def clear_entries():
     receipt_number_entry.delete(0, tk.END)
     item_name_entry.delete(0, tk.END)
     item_count_entry.delete(0, tk.END)
-    clear_button = tk.Button(root, text="Clear entries", command=clear_entries)
-    clear_button.grid(row=5, column=0, padx=5, pady=5)
-
 
 #create treeview and values
 def update_treeviews():
@@ -90,34 +87,38 @@ def update_treeviews():
         items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name, item_count))
 
 #insert entry boxes and set position on the grid
+
 customer_name_label = tk.Label(root, text="Customer full name:")
-customer_name_label.grid(row=0, column=0, padx=5, pady=5)
+customer_name_label.grid(row=1, column=0, padx=5, pady=5)
 customer_name_entry = tk.Entry(root)
-customer_name_entry.grid(row=0, column=1, padx=5, pady=5)
+customer_name_entry.grid(row=1, column=1, padx=5, pady=5)
 
 receipt_number_label = tk.Label(root, text="Receipt number:")
-receipt_number_label.grid(row=1, column=0, padx=5, pady=5)
+receipt_number_label.grid(row=2, column=0, padx=5, pady=5)
 receipt_number_entry = tk.Entry(root)
-receipt_number_entry.grid(row=1, column=1, padx=5, pady=5)
+receipt_number_entry.grid(row=2, column=1, padx=5, pady=5)
 
 item_name_label = tk.Label(root, text="Item that is hired:")
-item_name_label.grid(row=2, column=0, padx=5, pady=5)
+item_name_label.grid(row=3, column=0, padx=5, pady=5)
 item_name_entry = tk.Entry(root)
-item_name_entry.grid(row=2, column=1, padx=5, pady=5)
+item_name_entry.grid(row=3, column=1, padx=5, pady=5)
 
 item_count_label = tk.Label(root, text="Item count:")
-item_count_label.grid(row=3, column=0, padx=5, pady=5)
+item_count_label.grid(row=4, column=0, padx=5, pady=5)
 item_count_entry = tk.Entry(root)
-item_count_entry.grid(row=3, column=1, padx=5, pady=5)
+item_count_entry.grid(row=4, column=1, padx=5, pady=5)
 
 add_button = tk.Button(root, text="Add item", command=add_item)
-add_button.grid(row=4, column=0, padx=5, pady=5)
+add_button.grid(row=5, column=0, padx=5, pady=5)
 
 remove_button = tk.Button(root, text="Remove item", command=remove_item)
-remove_button.grid(row=4, column=1, padx=5, pady=5)
+remove_button.grid(row=5, column=1, padx=5, pady=5)
+
+clear_button = tk.Button(root, text="Clear entries", command=clear_entries)
+clear_button.grid(row=0, column=1, padx=5, pady=5)
 
 status_label = tk.Label(root, text="")
-status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+status_label.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 
 items_out_frame = tk.Frame(root)
 items_out_frame.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
