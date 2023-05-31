@@ -1,3 +1,5 @@
+#setup tkinter and pillow for logo 
+    
 from tkinter import ttk
 import tkinter as tk
 from PIL import ImageTk, Image
@@ -5,7 +7,7 @@ from PIL import ImageTk, Image
 root = tk.Tk()
 root.title("Party Hire Store")
 
-#place image for the logo and adjust size and position
+#get image from downloads and place for the logo and adjust size and position
 
 logo_image = Image.open(r"C:\Users\Marco\Downloads\julie.png")
 logo_image = logo_image.resize((75, 75))
@@ -14,9 +16,19 @@ logo_photo = ImageTk.PhotoImage(logo_image)
 logo_label = tk.Label(root, image=logo_photo)
 logo_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
+balloons = Image.open(r"C:\Users\Marco\Downloads\balloon.jpg")
+balloons = balloons.resize((100, 100))
+balloons_photo = ImageTk.PhotoImage(balloons)
+
+balloons_label = tk.Label(root, image=balloons_photo)
+balloons_label.grid(row=0, column=1, padx=0, pady=2, sticky="w")
+
+
+
+
 items_out = {}
 
-# define entry boxes, create error function
+# define entry boxes, create error function 
 
 def add_item():
     customer_name = customer_name_entry.get()
@@ -24,6 +36,7 @@ def add_item():
     item_name = item_name_entry.get()
     item_count = item_count_entry.get()
 
+#if any entry is blank, it will display this message
     if not customer_name or not receipt_number or not item_name or not item_count:
         status_label.config(text="Please fill in all fields.")
         return
@@ -42,6 +55,7 @@ def add_item():
         status_label.config(text="Receipt number should be an integer.")
         return
 
+#making only numbers between 1-500 valid
     item_count = int(item_count)
     if not 1 <= item_count <= 500:
         status_label.config(text="Invalid input. Please enter a number between 1 and 500 for item count.")
@@ -52,7 +66,7 @@ def add_item():
     status_label.config(text=f"{item_count} {item_name}(s) added to items out list for {customer_name}. Receipt number is {receipt_number}.")
     update_treeviews()
 
-#define remove item function
+#define the remove item function 
 def remove_item():
     selected_item = items_out_treeview.focus()
     if selected_item:
@@ -86,7 +100,7 @@ def update_treeviews():
         item_count = item_data['item_count']
         items_out_treeview.insert("", tk.END, values=(receipt_number, customer_name, item_name, item_count))
 
-#insert entry boxes and set position on the grid
+#insert entry boxes and set position on the grid so that they dont overlap
 
 customer_name_label = tk.Label(root, text="Customer full name:")
 customer_name_label.grid(row=1, column=0, padx=5, pady=5)
@@ -123,7 +137,7 @@ status_label.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 items_out_frame = tk.Frame(root)
 items_out_frame.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
-#get values for treeview 
+#create headings for treeview 
 items_out_treeview = ttk.Treeview(items_out_frame, columns=("receipt_number", "customer_name", "item_name","item_count"), show="headings")
 items_out_treeview.heading("receipt_number", text="Receipt number")
 items_out_treeview.heading("customer_name", text="Customer name")
